@@ -1,0 +1,19 @@
+{
+  "name": "instagram-liked-posts-downloader",
+  "version": "1.0.0",
+  "description": "Download liked (or all) posts from an Instagram profile.",
+  "main": "instaload.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "download-file": "^0.1.5",
+    "minimist": "^1.2.0",
+    "moment": "^2.22.2",
+    "puppeteer": "^1.5.0",
+    "request-promise": "^4.2.2"
+  }
+}
