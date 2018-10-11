@@ -1,7 +1,13 @@
+// =================================
+// Instagram Liked Posts Downloader
+// =================================
+
+
 const puppeteer = require('puppeteer');
 const request = require('request-promise');
 const chalk = require('chalk');
 const moment = require('moment');
+const delay = require('delay');
 const argv = require('minimist')(process.argv.slice(2));
 const download = require('download-file');
 
@@ -21,7 +27,6 @@ else { return console.log(chalk.red('Please specify a profile with the --profile
 
 if (argv.postsnumber) { config.pn = argv.postsnumber; }
 else if (argv.pn) { config.pn = argv.pn; }
-// else { config.pn = 50; }
 
 if (argv.all) { config.all = true; }
 
@@ -37,11 +42,18 @@ if (argv.all) { config.all = true; }
 
   // Login
   console.log(chalk.cyan(`Logging into Instagram account '${config.u}'`));
-  await page.goto('https://www.instagram.com/accounts/login/', { waitUntil: 'networkidle2' });
-  await page.type('input[name="username"]', config.u);
-  await page.type('input[name="password"]', config.pw);
-  await page.click('form span button');
-  await page.waitForNavigation();
+  await page.goto('https://www.instagram.com/accounts/login/');
+  await page.waitFor('input[name=username]', { visible: true });
+  await delay(300);
+  await page.type('input[name=username]', config.u, { delay: 50 });
+  await delay(500);
+  await page.type('input[name=password]', config.pw, { delay: 50 });
+  await delay(700);
+  const [ signup ] = await page.$x('//button[contains(.,"Log in")]');
+  await Promise.all([
+    page.waitForNavigation(),
+    signup.click({ delay: 50 })
+  ]);
   console.log(chalk.green('✔ Logged in successfully'));
 
 
@@ -71,10 +83,10 @@ if (argv.all) { config.all = true; }
 
       let first;
       if (config.pn) {
-        if (parseInt(config.pn) > 50) { first = 50; }
+        if (parseInt(config.pn) > 20) { first = 20; }
         else { first = parseInt(config.pn); }
       }
-      else { first = 50; }
+      else { first = 20; }
       let queryVars = { 'id': userId, 'first': first };
       let endCursor = '';
 
