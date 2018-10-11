@@ -86,7 +86,10 @@ if (argv.all) { config.all = true; }
         if (parseInt(config.pn) > 20) { first = 20; }
         else { first = parseInt(config.pn); }
       }
-      else { first = 20; }
+      else {
+        config.pn = 40;
+        first = 20;
+      }
       let queryVars = { 'id': userId, 'first': first };
       let endCursor = '';
 
