@@ -1,6 +1,7 @@
 # Instagram Liked Posts Downloader
 
 Download liked (or all) posts from a specified Instagram profile.
+> +++ CURRENTLY BROKEN +++
 
 ## How to use
 
